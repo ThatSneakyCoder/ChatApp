@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat App</title>
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+
+<body>
+    <div class="h-screen w-full bg-zinc-800">
+        <% if (flashMsg && flashMsg.length> 0) { %>
+            <div id="flash-message"
+                class="absolute ml-130 h-20 w-50 bg-blue-500 rounded-lg text-white flex items-center justify-center shadow-lg mt-2 animate-pulse">
+                <h1 class="p-2">
+                    <%= flashMsg %>
+                </h1>
+            </div>
+            <% } %>
+                <div class="container flex items-center justify-center">
+                    <div class="left h-screen w-1/3 bg-zinc-500 rounded-lg p-4 overflow-auto">
+                        <div class="add-friend h-35 w-full bg-green-500 rounded-lg mt-2 px-3 py-2 text-white">
+                            <form action="/user/<%= user._id %>/add-friend" method="post">
+                                <h1 class="text-2xl">Add Friend</h1>
+                                <input type="email"
+                                    class="w-full h-full border-1 border-indigo-500 border-dashed p-1 rounded-md"
+                                    placeholder="john@email.com" name="email">
+                                <input type="submit"
+                                    class="border-1 border-indigo-500 mt-2 bg-blue-500 px-3 py-2 rounded-md">
+                            </form>
+                        </div>
+                        <h1 class="text-3xl">Contacts</h1>
+                        <ul class="messages text-white">
+                            <% friends.forEach(friend=> { %>
+                                <li>
+                                    <div class="user-div h-20 w-full bg-zinc-700 rounded-lg mt-2 px-3 py-2 cursor-pointer"
+                                        data-id="<%= friend._id %>">
+                                        <div class="person-name">
+                                            <h1 class="text-xl">
+                                                <%= friend.name %>
+                                            </h1>
+                                        </div>
+                                    </div>
+                                </li>
+                                <% }) %>
+                        </ul>
+                    </div>
+                    <div class="right h-screen w-2/3 bg-zinc-600 rounded-lg p-4 overflow-auto relative">
+                        <div class="absolute top-0 right-0">
+                            <button id="logout-button"
+                                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                Logout
+                            </button>
+                        </div>
+                        <div id="chat" class="chat h-[calc(100vh-50px)] overflow-auto">
+                            <ul id="chats-ul" class="messages text-white flex flex-col mb-10">
+                                <h1 class="text-3xl"></h1>
+                            </ul>
+                        </div>
+                        <div style="display: none;" class="send-msg fixed bottom-0 left-107 w-[65%] px-2 py-1">
+                            <form id="form" class="w-full flex bg-gray-700 p-2 rounded-lg" action="">
+                                <input id="input" autocomplete="off"/><button>Send</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+    </div>
+    <script src="/javascripts/clientSideController/showChats.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script type="module" src="/javascripts/config/initSocketClient.js"></script>
+    <script type="module" src="/javascripts/clientSideSocketHandler/emitChatsToServer.js"></script>
+    <script type="module" src="/javascripts/clientSideSocketHandler/receiveChatsFromServer.js"></script>
+    <script type="module" src="/javascripts/clientSideSocketHandler/registerClientOnServer.js"></script>
+    <script>
+        const logout = document.getElementById("logout-button");
+        const currentURL = window.location.href;
+        logout.addEventListener("click", () => {
+            window.location.assign(`${currentURL}/logout`);
+        });
+    </script>
+</body>
+
+</html>

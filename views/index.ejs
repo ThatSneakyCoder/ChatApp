@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat App</title>
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+</head>
+<body>
+    <div class="h-screen w-full bg-zinc-800">
+        <% if (flashMsg && flashMsg.length > 0) { %>
+            <div id="flash-message" class="absolute ml-130 h-20 w-50 bg-blue-500 rounded-lg text-white flex items-center justify-center shadow-lg mt-2 animate-pulse">
+                <h1 class="p-2"><%= flashMsg %></h1>
+            </div>
+        <% } %>
+
+        <div class="conatiner flex items-center justify-center text-white">
+            <div class="left max-h-screen w-1/2 flex items-center justify-center mt-30">
+                <div class="register h-100 w-60 bg-zinc-600 rounded-lg p-5">
+                    <h1 class="text-3xl ml-12 mb-4">Register</h1>
+                    <form action="/register" method="POST">
+                        <input class="w-full bg-transparent placeholder:text-slate-400 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow" type="text"  placeholder="Name" name="name">
+                        <input type="email" class="w-full bg-transparent placeholder:text-slate-400 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow mt-2" placeholder="Email" name="email">
+                        <input type="password" class="w-full bg-transparent placeholder:text-slate-400 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow mt-2" placeholder="Password" name="password">
+                        <input type="password" class="w-full bg-transparent placeholder:text-slate-400 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow mt-2" placeholder="Enter Password Again" name="passwordCheck">
+                        <input type="submit" class="w-full bg-blue-500 placeholder:text-slate-400 text-sm rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:bg-blue-600 shadow-sm focus:shadow mt-2" value="Submit">
+                    </form>
+                </div>
+            </div>
+            <div class="right max-h-screen w-1/2 flex items-center justify-center mt-30">
+                <div class="login h-100 w-60 bg-zinc-600 rounded-lg p-5">
+                    <h1 class="text-3xl ml-15 mb-4">Login</h1>
+                        <form action="/login" method="POST">
+                            <input type="email" class="w-full bg-transparent placeholder:text-slate-400 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow mt-2" placeholder="Email" name="email">
+                            <input type="password" class="w-full bg-transparent placeholder:text-slate-400 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow mt-2" placeholder="Password" name="password">
+                            <input type="submit" class="w-full bg-blue-500 placeholder:text-slate-400 text-sm rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:bg-blue-600 shadow-sm focus:shadow mt-2" value="Submit">
+                        </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        setTimeout(() => {
+            const flashMessage = document.getElementById("flash-message");
+            if (flashMessage) {
+                flashMessage.style.display = "none";
+            }
+        },3000);
+    </script>
+</body>
+</html>
